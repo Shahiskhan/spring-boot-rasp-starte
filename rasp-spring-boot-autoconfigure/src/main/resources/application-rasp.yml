@@ -1,0 +1,35 @@
+# Reference defaults. Properties are also defined in RaspProperties; no Spring profile is required.
+rasp:
+  enabled: true
+  mode: BLOCK
+  fail-open: true
+  block-threshold: 50
+  scan:
+    headers: true
+    query-params: true
+    body: true
+    uri: true
+    method-args: true
+    max-body-size: 1MB
+    skip-content-types: [multipart/form-data, application/octet-stream]
+    max-object-depth: 8
+    max-object-values: 2048
+  detectors:
+    sqli: {enabled: true, priority: 100}
+    xss: {enabled: true, priority: 90}
+    spel: {enabled: true, priority: 95}
+    path-traversal: {enabled: true, priority: 80}
+    command: {enabled: true, priority: 85}
+    ldap: {enabled: true, priority: 70}
+    nosql: {enabled: true, priority: 70}
+    xxe: {enabled: true, priority: 90}
+  whitelist:
+    paths: [/actuator/**, /swagger-ui/**, /v3/api-docs/**]
+    ips: []
+    param-names: []
+    headers: [Authorization, Cookie, X-CSRF, X-CSRF-TOKEN, Content-Length]
+  response: {include-details: false, http-status: 403}
+  metrics: {enabled: true}
+  cache: {pattern-cache-size: 500, pattern-cache-ttl-seconds: 3600}
+  rate-limit: {max-entries: 10000, violation-threshold: 3, window-seconds: 60, block-seconds: 60}
+  alerting: {enabled: false, threshold: 10, webhook-url: ""}

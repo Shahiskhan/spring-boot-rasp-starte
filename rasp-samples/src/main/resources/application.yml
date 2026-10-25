@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: rasp-demo
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+  error:
+    include-message: never
+    include-stacktrace: never
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      # Demo-only visibility so /actuator/health shows the RASP component.
+      # Use when-authorized behind authentication in a deployed application.
+      show-details: always
+rasp:
+  enabled: true
+  mode: ${RASP_MODE:BLOCK}
+  fail-open: true
+  scan:
+    max-body-size: 1MB
+  whitelist:
+    # Deliberately do not whitelist localhost: local demo requests are scanned.
+    ips: []
+  response:
+    include-details: false
+    http-status: 403
